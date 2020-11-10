@@ -1,24 +1,105 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import DeleteButton from './components/buttons/delete_button'
+import CopyButton from './components/buttons/copy_button'
+import './App.css'
+import { v4 as uuidv4 } from 'uuid';
 
-function App() {
+type ToDo = {
+  id: string,
+  description: string,
+  finished: boolean
+}
+
+const App = () => {
+
+  const [toDos, setToDos] = useState<ToDo[]>([])
+  const [inputValue, setInputValue] = useState("")
+
+  // Logic for box check/uncheck
+  const checkboxHandler = (index: number) => {
+    const newTodos = [...toDos]
+    newTodos[index].finished = !newTodos[index].finished
+    setToDos(newTodos)
+  }
+
+  const addHandler = () => {
+    if (!inputValue) {
+      return
+    }
+
+    setToDos(
+      [...toDos,
+      {
+        id: uuidv4(),
+        description: inputValue,
+        finished: false
+      }
+      ])
+    setInputValue("")
+  }
+
+  const deleteHandler = (index: number) => {
+    const newToDos = [...toDos]
+    newToDos.splice(index, 1)
+    setToDos(newToDos)
+  }
+
+  const copyHandler = (index: number) => {
+    const newTodo = {
+      ...toDos[index],
+      id: uuidv4()
+    }
+    setToDos([...toDos, newTodo])
+  }
+
   return (
+
+    // Renders view
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <input type="text"
+        placeholder="Add item"
+        value={inputValue}
+        onChange={
+          (e) => {
+            setInputValue(e.target.value)
+          }}
+      />
+
+      <button onClick={
+        addHandler}>Add</button>
+
+      <ul>
+        {
+          // Renders tasks and checkboxes
+          toDos.map(({ description, finished, id }, index) => {
+            return (
+
+              <li key={id}>
+
+                <input
+                  type="checkbox"
+                  checked={finished}
+                  onChange={
+                    () => checkboxHandler(index)
+                  }
+                />
+
+                {/* renders tasks */}
+                {description}
+
+                <DeleteButton
+                  deleteHandler={() => deleteHandler(index)}
+                />
+
+                <CopyButton
+                  copyHandler={() => copyHandler(index)}
+                />
+
+              </li>
+            )
+          })}
+      </ul>
     </div>
   );
 }
