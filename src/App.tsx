@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from './components/buttons/button'
 import DeleteButton from './components/buttons/delete_button'
 import CopyButton from './components/buttons/copy_button'
 import './App.css'
@@ -61,13 +62,10 @@ const App = () => {
         placeholder="Add item"
         value={inputValue}
         onChange={
-          (e) => {
-            setInputValue(e.target.value)
-          }}
+          (e) => { setInputValue(e.target.value) }}
       />
 
-      <button onClick={
-        addHandler}>Add</button>
+      <Button text="Add" clickHandler={addHandler} />
 
       <ul>
         {
@@ -80,21 +78,14 @@ const App = () => {
                 <input
                   type="checkbox"
                   checked={finished}
-                  onChange={
-                    () => checkboxHandler(index)
-                  }
-                />
+                  onChange={() => checkboxHandler(index)} />
 
                 {/* renders tasks */}
                 {description}
 
-                <DeleteButton
-                  deleteHandler={() => deleteHandler(index)}
-                />
+                <Button text="Delete" clickHandler={() => deleteHandler(index)} />
 
-                <CopyButton
-                  copyHandler={() => copyHandler(index)}
-                />
+                <Button text="Copy" clickHandler={() => copyHandler(index)} />
 
               </li>
             )
