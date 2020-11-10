@@ -25,6 +25,7 @@ const App = () => {
     if (!inputValue) {
       return
     }
+
     setToDos(
       [...toDos,
       {
