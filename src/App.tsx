@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Button from './components/buttons/button'
-import DeleteButton from './components/buttons/delete_button'
-import CopyButton from './components/buttons/copy_button'
 import './App.css'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,7 +25,6 @@ const App = () => {
     if (!inputValue) {
       return
     }
-
     setToDos(
       [...toDos,
       {
@@ -84,7 +81,6 @@ const App = () => {
                 {description}
 
                 <Button text="Delete" clickHandler={() => deleteHandler(index)} />
-
                 <Button text="Copy" clickHandler={() => copyHandler(index)} />
 
               </li>
@@ -94,5 +90,4 @@ const App = () => {
     </div>
   );
 }
-
 export default App;
