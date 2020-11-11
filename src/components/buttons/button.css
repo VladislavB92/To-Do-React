@@ -1,8 +1,10 @@
 .button {
-    background-color: bisque;
+    background-color: black;
+    color: white;
     border: none;
     cursor: pointer;
     transition: opacity 0.2s;
+    
 }
 
 .button:hover {
